@@ -53,3 +53,4 @@ Route::prefix('Training')->group(function(){
     }); 
 });
 /* end Training route */
+Route::fallback(fn()=>Redirect::to('/'));
