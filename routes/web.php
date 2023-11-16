@@ -52,9 +52,10 @@ Route::prefix('Training')->group(function(){
         return '<h1>This Logistics Page</h1>';
     }); 
 });
-// Route::fallback(function(){
-// return Redirect('/');
-// });
+
+Route::fallback(function(){
+ return Redirect('/');
+ });
 Route::get('cv',function(){
     return view('cv');
 });
@@ -75,3 +76,7 @@ Route::post('my/data',fn()=>view('my-data'));
 // Route::post('recieve/data',function(){
 // return 'recieve data site';
 // })->name("receive");
+
+/* end Training route */
+Route::fallback(fn()=>Redirect::to('/'));
+
