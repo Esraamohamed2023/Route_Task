@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\Examplecontroller;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -52,4 +52,26 @@ Route::prefix('Training')->group(function(){
         return '<h1>This Logistics Page</h1>';
     }); 
 });
+// Route::fallback(function(){
+// return Redirect('/');
+// });
+Route::get('cv',function(){
+    return view('cv');
+});
+Route::get('login',function(){
+    return view('login');
+});
+Route::post('receive',function(){
+    return 'recieved data ';
+    })->name("receive");
+
+
+
+Route::get('addcar',[Examplecontroller::class,'test1']);
+Route::post('data-add',[Examplecontroller::class,'test2'])->name("data-add");
 /* end Training route */
+
+Route::post('my/data',fn()=>view('my-data'));
+// Route::post('recieve/data',function(){
+// return 'recieve data site';
+// })->name("receive");
