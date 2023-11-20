@@ -2,6 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Examplecontroller;
+use App\Http\Controllers\CarController;
+use App\Http\Controllers\NewsController;
+enum Section:string{
+    case phone='phone';
+    case computer='computer';
+}
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -53,9 +59,9 @@ Route::prefix('Training')->group(function(){
     }); 
 });
 
-Route::fallback(function(){
- return Redirect('/');
- });
+// Route::fallback(function(){
+//  return Redirect('/');
+//  });
 Route::get('cv',function(){
     return view('cv');
 });
@@ -68,15 +74,30 @@ Route::post('receive',function(){
 
 
 
-Route::get('addcar',[Examplecontroller::class,'test1']);
-Route::post('data-add',[Examplecontroller::class,'test2'])->name("data-add");
-/* end Training route */
+// Route::get('addcar',[Examplecontroller::class,'test1']);
+// Route::get('addcar','Examplecontroller@test1');
+// Route::post('data-add',[Examplecontroller::class,'test2'])->name("data-add");
 
+Route::domain('{acount}.laravel')->group(function(){
+    // Route::get('addcar','Examplecontroller@test1');
+});
+Route::get('sections/{section}',function(Section $section){
+    return $section->value;
+});
+/* end Training route */
+Route::get('carshow',[CarController::class,'index']);
+Route::post('cardetails',[CarController::class,'store'])->name('cars');
 Route::post('my/data',fn()=>view('my-data'));
 // Route::post('recieve/data',function(){
 // return 'recieve data site';
 // })->name("receive");
 
 /* end Training route */
-Route::fallback(fn()=>Redirect::to('/'));
+// Route::fallback(fn()=>Redirect::to('/'));
 
+/* start new section to add post  */
+
+Route::get('postshow',[NewsController::class,'create']);
+Route::post('postrecieve',[NewsController::class,'store'])->name('add-post');
+
+/* end new section to add post  */

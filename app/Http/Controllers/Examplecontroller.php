@@ -19,7 +19,7 @@ class Examplecontroller extends Controller
         ]);
     
         return view('dataRecieve')->with([
-            'title'=>$request->input('title'),
+            'title'=>$request->title,
             'price'=>$request->input('price'),
             'description'=>$request->input('description'),
             'published' => $request->has('remember'),
