@@ -74,9 +74,9 @@ Route::post('receive',function(){
 
 
 
-// Route::get('addcar',[Examplecontroller::class,'test1']);
-// Route::get('addcar','Examplecontroller@test1');
-// Route::post('data-add',[Examplecontroller::class,'test2'])->name("data-add");
+Route::get('addcar',[Examplecontroller::class,'test1']);
+Route::get('addcar','Examplecontroller@test1');
+Route::post('data-add',[Examplecontroller::class,'test2'])->name("data-add");
 
 Route::domain('{acount}.laravel')->group(function(){
     // Route::get('addcar','Examplecontroller@test1');
@@ -86,8 +86,13 @@ Route::get('sections/{section}',function(Section $section){
 });
 /* end Training route */
 Route::get('carshow',[CarController::class,'index']);
-Route::post('cardetails',[CarController::class,'store'])->name('cars');
+Route::get('addcar',[CarController::class,'create']);
+Route::post('storecare',[CarController::class,'store'])->name('cars');
+Route::get('editcar/{id}',[CarController::class,'edit']);
+Route::put('update/{id}',[CarController::class,'update'])->name("update");
 Route::post('my/data',fn()=>view('my-data'));
+
+
 // Route::post('recieve/data',function(){
 // return 'recieve data site';
 // })->name("receive");
@@ -99,5 +104,10 @@ Route::post('my/data',fn()=>view('my-data'));
 
 Route::get('postshow',[NewsController::class,'create']);
 Route::post('postrecieve',[NewsController::class,'store'])->name('add-post');
+/* task 5  */
 
+Route::get('showposts',[NewsController::class,'index']);
+Route::get('addpost',[NewsController::class,'create']);
+Route::get('updatepost/{id}',[NewsController::class,'edit']);
+Route::put('updatepost/{id}',[NewsController::class,'update'])->name("updatepost");
 /* end new section to add post  */
