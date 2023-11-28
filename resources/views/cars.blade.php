@@ -12,14 +12,17 @@
 
 <div class="container">
   <h2>Hover Rows</h2>
-  <p>The .table-hover class enables a hover state on table rows:</p>            
+        
   <table class="table table-hover">
     <thead>
       <tr>
         <th>Title</th>
         <th>Price</th>
         <th>Description</th>
+        <th>published</th>
         <th>Edit</th>
+        <th>show</th>
+        <th>delete</th>
       </tr>
     </thead>
     <tbody>
@@ -32,6 +35,8 @@
        
         <td> @if($car->published)  yes✅ @else  no ❎ @endif  </td>
           <td><a href="editcar/{{$car->id}}">Edit</a></td>
+          <td><a href="cardetails/{{$car->id}}">show</a></td>
+          <td><a href="deletecar/{{$car->id}}">delete</a></td>
       </tr>
      @endforeach
     </tbody>

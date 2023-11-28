@@ -90,6 +90,8 @@ Route::get('addcar',[CarController::class,'create']);
 Route::post('storecare',[CarController::class,'store'])->name('cars');
 Route::get('editcar/{id}',[CarController::class,'edit']);
 Route::put('update/{id}',[CarController::class,'update'])->name("update");
+Route::get('deletecar/{id}',[CarController::class,'destroy']);
+Route::get('cardetails/{id}',[CarController::class,'show'])->name('cardetails');
 Route::post('my/data',fn()=>view('my-data'));
 
 
@@ -104,10 +106,12 @@ Route::post('my/data',fn()=>view('my-data'));
 
 Route::get('postshow',[NewsController::class,'create']);
 Route::post('postrecieve',[NewsController::class,'store'])->name('add-post');
-/* task 5  */
+/* task 6 */
 
 Route::get('showposts',[NewsController::class,'index']);
 Route::get('addpost',[NewsController::class,'create']);
 Route::get('updatepost/{id}',[NewsController::class,'edit']);
 Route::put('updatepost/{id}',[NewsController::class,'update'])->name("updatepost");
+Route::get('deletepost/{id}',[NewsController::class,'destroy']);
+Route::get('postdetails/{id}',[NewsController::class,'show'])->name('postdetails');
 /* end new section to add post  */

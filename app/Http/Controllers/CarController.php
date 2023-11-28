@@ -1,20 +1,19 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use App\Models\Car;        // to work this model        
+use App\Models\Car;          
 
 class CarController extends Controller
 {
+    private $columns=['title','price','description'];
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
      $cars=Car::get();
-    return view('cars',compact('cars'));  //get all data on variable cars to show them by name of variable
+    return view('cars',compact('cars')); //get all data on variable cars to show them by name of variable
       
     }
 
@@ -48,7 +47,10 @@ class CarController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $car = Car::findOrFail($id);
+
+       
+        return view('cardetails', compact('car'));
     }
 
     /**
@@ -65,6 +67,10 @@ class CarController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $data=$request->only($this->columns);
+        $data['published']=isset($data['published'])?true:false;
+        Car::where('id', $id)->update($request->only($this->columns));
+return "updated";
     }
 
     /**
@@ -72,6 +78,10 @@ class CarController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $car = Car::findOrFail($id);
+        $car->delete();
+    
+        return "Car with ID {$id} has been deleted.";
     }
 }
+

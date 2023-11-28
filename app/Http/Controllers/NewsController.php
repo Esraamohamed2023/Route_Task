@@ -7,6 +7,7 @@ use App\Models\Post;
 
 class NewsController extends Controller
 {
+    private $columns=['title','author','content','published'];
     /**
      * Display a listing of the resource.
      */
@@ -44,7 +45,10 @@ class NewsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $post= Post::findOrFail($id);
+
+       
+        return view('postdetails', compact('post'));
     }
 
     /**
@@ -61,14 +65,21 @@ class NewsController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $post = Post::findOrFail($id);
+
+    $post->update([
+        'published' => $request->has('published')
+    ]);
+
+       
+  return "data updated";
+      
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->delete();
+        return "post with ID {$id} has been deleted.";
     }
 }
