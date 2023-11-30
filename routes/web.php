@@ -87,12 +87,16 @@ Route::get('sections/{section}',function(Section $section){
 /* end Training route */
 Route::get('carshow',[CarController::class,'index']);
 Route::get('addcar',[CarController::class,'create']);
-Route::post('storecare',[CarController::class,'store'])->name('cars');
+Route::post('storecare',[CarController::class,'store'])->name('addcar');
 Route::get('editcar/{id}',[CarController::class,'edit']);
 Route::put('update/{id}',[CarController::class,'update'])->name("update");
 Route::get('deletecar/{id}',[CarController::class,'destroy']);
 Route::get('cardetails/{id}',[CarController::class,'show'])->name('cardetails');
+Route::get('trashed',[CarController::class,'trashed']);
+Route::get('restorecar/{id}',[CarController::class,'restore']);
+Route::get('forcedelete/{id}',[CarController::class,'forcedelete']);
 Route::post('my/data',fn()=>view('my-data'));
+
 
 
 // Route::post('recieve/data',function(){
@@ -114,4 +118,7 @@ Route::get('updatepost/{id}',[NewsController::class,'edit']);
 Route::put('updatepost/{id}',[NewsController::class,'update'])->name("updatepost");
 Route::get('deletepost/{id}',[NewsController::class,'destroy']);
 Route::get('postdetails/{id}',[NewsController::class,'show'])->name('postdetails');
+Route::get('posttrashed',[NewsController::class,'posttrashed']);
+Route::get('restorepost/{id}',[NewsController::class,'restore']);
+Route::get('deletepost/{id}',[NewsController::class,'forcedelete']);
 /* end new section to add post  */

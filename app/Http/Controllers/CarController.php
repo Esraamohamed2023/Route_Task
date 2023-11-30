@@ -6,7 +6,7 @@ use App\Models\Car;
 
 class CarController extends Controller
 {
-    private $columns=['title','price','description'];
+    private $columns=['title','price','description','published'];
     /**
      * Display a listing of the resource.
      */
@@ -30,13 +30,25 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
-      $cars=new Car;
-      $result=$cars->title=$request->title;
-      $cars->price=$request->price;
-      $cars->description=$request->description;
-      $cars->published = $request->has('published') ? true : false;
-      $cars->save();
-      return "car title is:". $result;
+        $request->validate([
+            'title' => 'required|string',
+            'description' => 'string|max:10',
+            
+        ]);
+    
+        $data = $request->only($this->columns);
+
+        $data['published'] = isset($data['published'])? true : false;
+
+        Car::create($data);        
+        return "car data added";
+    //   $cars=new Car;
+    //   $result=$cars->title=$request->title;
+    //   $cars->price=$request->price;
+    //   $cars->description=$request->description;
+    //   $cars->published = $request->has('published') ? true : false;
+    //   $cars->save();
+
 
     
 
@@ -83,5 +95,18 @@ return "updated";
     
         return "Car with ID {$id} has been deleted.";
     }
-}
 
+
+public function trashed(){
+  $cars= Car::onlyTrashed()->get();
+return view('trashed',compact('cars'));
+}
+public function restore(string $id):RedirectResponse{
+    Car::where('id',$id)->restore();
+    return redirect('carshow');
+}
+public function forcedelete(string $id):RedirectResponse{
+    Car::where('id',$id)->forceDelete();
+    return redirect('carshow');
+}
+}

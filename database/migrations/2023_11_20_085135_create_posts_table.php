@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('author');
             $table->text('content');
             $table->boolean('published');
+            $table->softDeletes();
             $table->timestamps();   // add two cloumns created at and updated at
         });
     }

@@ -12,19 +12,31 @@
 
 <div class="container">
   <h2>Add Car</h2>
-  <form action="{{route('cars')}}" method="post">
+  <form action="{{route('addcar')}}" method="post">
   @csrf
     <div class="form-group">
       <label for="title">Title:</label>
-      <input type="text" class="form-control" id="title" placeholder="Enter title" name="title">
+   
+      <input type="text" class="form-control" id="title" placeholder="Enter title" name="title" value="{{old('title')}}">
+      @error('title')
+      {{-- <p>invalid title</p> --}}
+     <div class="alert alert-warning">{{$message}}</div> 
+      @enderror
     </div>
     <div class="form-group">
       <label for="price">Price:</label>
-      <input type="number" class="form-control" id="price" placeholder="Enter Price" name="price">
+      <input type="number" class="form-control" id="price" placeholder="Enter Price" name="price"  value="{{old('title')}}">
+     
     </div>
     <div class="form-group">
         <label for="description">Description:</label>
-        <textarea class="form-control" rows="5" id="description" name="description"></textarea>
+        <textarea class="form-control" rows="5" id="description" name="description">{{old('title')}}
+       </textarea>
+        @error('description')
+        {{-- <p>invalid description</p> --}}
+        <div class="alert alert-warning">{{$message}}</div> 
+     
+        @enderror
       </div> 
     <div class="checkbox">
       <label><input type="checkbox" name="published"> Published</label>

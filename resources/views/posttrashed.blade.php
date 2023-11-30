@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>cars show</title>
+  <title>post trashed</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -17,26 +17,26 @@
     <thead>
       <tr>
         <th>Title</th>
-        <th>Price</th>
-        <th>Description</th>
+        <th>Author</th>
+        <th>Content</th>
         <th>published</th>
         <th>Edit</th>
-        <th>show</th>
-        <th>delete</th>
+        <th>Restore</th>
+        <th>Delete</th>
       </tr>
     </thead>
     <tbody>
-        @foreach($cars as $car)
+        @foreach($posts as $post)
       <tr>
         
-        <td>{{$car['title']}}</td>
-        <td>{{$car->price}}</td>
-        <td>{{$car->description}}</td>
+        <td>{{$post->title}}</td>
+        <td>{{$post->author}}</td>
+        <td>{{$post->content}}</td>
        
-        <td> @if($car->published)  yes✅ @else  no ❎ @endif  </td>
-          <td><a href="editcar/{{$car->id}}">Edit</a></td>
-          <td><a href="cardetails/{{$car->id}}">show</a></td>
-          <td><a href="deletecar/{{$car->id}}">delete</a></td>
+        <td> @if($post->published)  yes✅ @else  no ❎ @endif  </td>
+          <td><a href="editpost/{{$post->id}}">Edit</a></td>
+          <td><a href="restorepost/{{$post->id}}">Restore</a></td>
+          <td><a href="deletepost/{{$post->id}}">Delete</a></td>
       </tr>
      @endforeach
     </tbody>

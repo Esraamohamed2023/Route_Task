@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>cars show</title>
+  <title>trashed</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -21,8 +21,8 @@
         <th>Description</th>
         <th>published</th>
         <th>Edit</th>
-        <th>show</th>
-        <th>delete</th>
+        <th>Restore</th>
+        <th>Delete</th>
       </tr>
     </thead>
     <tbody>
@@ -35,8 +35,8 @@
        
         <td> @if($car->published)  yes✅ @else  no ❎ @endif  </td>
           <td><a href="editcar/{{$car->id}}">Edit</a></td>
-          <td><a href="cardetails/{{$car->id}}">show</a></td>
-          <td><a href="deletecar/{{$car->id}}">delete</a></td>
+          <td><a href="restorecar/{{$car->id}}">restore</a></td>
+          <td><a href="forcedelete/{{$car->id}}">delete</a></td>
       </tr>
      @endforeach
     </tbody>
