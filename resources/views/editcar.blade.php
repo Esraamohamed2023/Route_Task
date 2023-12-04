@@ -33,6 +33,16 @@
     <div class="checkbox">
       <label><input type="checkbox" name="published" @checked($car->published)>published</label>
     </div>
+    <div class="form-group">
+
+      <label for="image">Image:</label>
+    
+      <img src="{{asset('assets/images/' . $car->image) }}" alt="Current Image" style="max-width: 200px; margin-bottom: 10px;">
+      <input type="file" class="form-control" id="image" name="image" value="{{$car->image}}">
+     
+
+
+  </div>
     <button type="submit" class="btn btn-default">update</button>
   </form>
 </div>

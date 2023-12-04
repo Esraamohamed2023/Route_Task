@@ -74,7 +74,8 @@ Route::post('receive',function(){
 
 
 
-Route::get('addcar',[Examplecontroller::class,'test1']);
+Route::get('showupload',[Examplecontroller::class,'showupload']);
+Route::post('upload',[Examplecontroller::class,'upload'])->name('upload');
 Route::get('addcar','Examplecontroller@test1');
 Route::post('data-add',[Examplecontroller::class,'test2'])->name("data-add");
 

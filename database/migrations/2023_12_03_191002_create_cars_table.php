@@ -11,14 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('posts', function (Blueprint $table) {
+        Schema::create('cars', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('author');
-            $table->text('content');
-            $table->boolean('published');
+            $table->integer('price');
+            $table->text('description');
+            $table->boolean('published')->default(true);
+            $table->string('image');
+           
             $table->softDeletes();
-            $table->timestamps();   // add two cloumns created at and updated at
+            $table->timestamps();
         });
     }
 
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('news');
+        Schema::dropIfExists('cars');
     }
 };

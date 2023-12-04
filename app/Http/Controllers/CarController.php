@@ -2,11 +2,13 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use App\Models\Car;          
+use App\Models\Car;  
+use App\Traits\Common;        
 
 class CarController extends Controller
 {
-    private $columns=['title','price','description','published'];
+    use common;
+    private $columns=['title','price','description','published','image'];
     /**
      * Display a listing of the resource.
      */
@@ -30,25 +32,36 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title' => 'required|string',
-            'description' => 'string|max:10',
-            
-        ]);
-    
-        $data = $request->only($this->columns);
-
-        $data['published'] = isset($data['published'])? true : false;
-
-        Car::create($data);        
-        return "car data added";
-    //   $cars=new Car;
+        //   $cars=new Car;
     //   $result=$cars->title=$request->title;
     //   $cars->price=$request->price;
     //   $cars->description=$request->description;
     //   $cars->published = $request->has('published') ? true : false;
     //   $cars->save();
+    
+        // $data = $request->only($this->columns);
 
+        // $data['published'] = isset($data['published'])? true : false;
+
+        // Car::create($data);        
+        $message=[
+            'title.required'=>'title is required',
+            'description.required'=>'should be text',
+        ];
+        $data=$request->validate([
+            'title' => 'required|string',
+            'description' => 'string',
+            'price'=>"numeric",
+            // 'image' => 'required|mimes:png,jpg,jpeg|max:2048',
+            
+        ],$message);
+       
+        $fileName=$this->uploadFile($request->image,'assets/images');
+        $data['published'] = isset($request['published']);
+        $data['image']=$fileName;
+        Car::create($data);        
+   
+return "done";
 
     
 
@@ -79,11 +92,37 @@ class CarController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $data=$request->only($this->columns);
-        $data['published']=isset($data['published'])?true:false;
-        Car::where('id', $id)->update($request->only($this->columns));
-return "updated";
+        $data = $request->only($this->columns);
+        $data['published'] = isset($data['published']) ? true : false;
+    
+        $car = Car::findOrFail($id); 
+    
+        if ($request->hasFile('image')) {        
+            $path = public_path().'/assets/images/';
+    
+            // Code for removing the old file
+            if ($car->image != '' && $car->image != null) {
+                $file_old = $path . $car->image;
+                unlink($file_old);
+                 // Upload the new file
+            $fileName=$this->uploadFile($request->image,'assets/images');
+    
+            // Update the image in the table
+            $car->update(['image' => $fileName]);
+            }
+    
+           
+       
+        else {
+            // If no new image is uploaded, keep the existing image
+            $data['image'] = $car->image;
+        }
+        }
+        $car->update($data);
+    
+        return "data updated";
     }
+    
 
     /**
      * Remove the specified resource from storage.

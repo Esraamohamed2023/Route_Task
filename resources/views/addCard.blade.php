@@ -12,7 +12,7 @@
 
 <div class="container">
   <h2>Add Car</h2>
-  <form action="{{route('addcar')}}" method="post">
+  <form action="{{route('addcar')}}" method="post" enctype="multipart/form-data">
   @csrf
     <div class="form-group">
       <label for="title">Title:</label>
@@ -41,6 +41,19 @@
     <div class="checkbox">
       <label><input type="checkbox" name="published"> Published</label>
     </div>
+    <div class="form-group">
+
+      <label for="image">Image:</label>
+
+      <input type="file" class="form-control" id="image" name="image" value="{{ old('image') }}">
+
+      @error('image')
+
+          {{ $message }}
+
+      @enderror
+
+  </div>
     <button type="submit" class="btn btn-default">Add</button>
   </form>
 </div>
