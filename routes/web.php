@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Examplecontroller;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\NewsController;
+use App\Http\Controllers\PlaceController;
 enum Section:string{
     case phone='phone';
     case computer='computer';
@@ -123,3 +124,12 @@ Route::get('posttrashed',[NewsController::class,'posttrashed']);
 Route::get('restorepost/{id}',[NewsController::class,'restore']);
 Route::get('deletepost/{id}',[NewsController::class,'forcedelete']);
 /* end new section to add post  */
+Route::get('landing',[Examplecontroller::class,'landing']);
+Route::get('blog', function () {
+    return view('layouts.blog');
+});
+
+Route::get('newblog',[PlaceController::class,'index']);
+Route::get('addexplore',[PlaceController::class,'create']);
+Route::post('addnew',[PlaceController::class,'store'])->name('addnew');
+Route::get('showplaces',[PlaceController::class,'showLastSixRows']);

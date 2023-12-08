@@ -12,7 +12,7 @@
 
 <div class="container">
   <h2>update Car</h2>
-  <form action="{{route('update',[$car->id])}}" method="post">
+  <form action="{{route('update',[$car->id])}}" method="post" enctype="multipart/form-data">
   @csrf
   @method('put')
     <div class="form-group">

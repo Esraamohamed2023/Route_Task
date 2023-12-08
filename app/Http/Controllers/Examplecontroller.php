@@ -40,4 +40,7 @@ class Examplecontroller extends Controller
         $fileName=$this->uploadFile($request->image,'assets/images');
         return $fileName;
     }
+    public function landing(){
+       return  view('landing');
+    }
 }

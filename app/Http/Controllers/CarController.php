@@ -92,36 +92,31 @@ return "done";
      */
     public function update(Request $request, string $id)
     {
-        $data = $request->only($this->columns);
+        $message = [
+            'title.required' => 'Title is required',
+            'description.required' => 'Should be text',
+            'image' => 'sometimes|mimes:png,jpg,jpeg'
+        ];
+    
+        $data = $request->validate([
+            'title' => 'required|string',
+            'description' => 'string',
+            'price' => 'numeric',
+            // 'image' => 'required|mimes:png,jpg,jpeg|max:2048',
+        ], $message);
+    
         $data['published'] = isset($data['published']) ? true : false;
     
-        $car = Car::findOrFail($id); 
-    
-        if ($request->hasFile('image')) {        
-            $path = public_path().'/assets/images/';
-    
-            // Code for removing the old file
-            if ($car->image != '' && $car->image != null) {
-                $file_old = $path . $car->image;
-                unlink($file_old);
-                 // Upload the new file
-            $fileName=$this->uploadFile($request->image,'assets/images');
-    
-            // Update the image in the table
-            $car->update(['image' => $fileName]);
-            }
-    
-           
-       
-        else {
-            // If no new image is uploaded, keep the existing image
-            $data['image'] = $car->image;
+        if ($request->hasFile('image')) {
+            $fileName = $this->uploadFile($request->file('image'), 'assets/images');
+            $data['image'] = $fileName;
         }
-        }
-        $car->update($data);
     
-        return "data updated";
+        Car::where('id', $id)->update($data);
+    
+        return "Data updated";
     }
+    
     
 
     /**
