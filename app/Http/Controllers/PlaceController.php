@@ -15,7 +15,13 @@ class placeController extends Controller
      */
     public function index()
     {
-        return view('layouts.blog');
+    $result_2 = DB::table('places')
+    ->select('*')
+    ->orderBy('id', 'asc')
+    ->take(20)
+    ->get();
+
+        return view('places',['result' => $result_2]);
     }
 
     /**
@@ -55,7 +61,7 @@ class placeController extends Controller
      */
     public function edit(string $id)
     {
-        //
+       
     }
 
     /**
@@ -71,7 +77,10 @@ class placeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $places = Place::findOrFail($id);
+        $places->delete();
+    
+        return "Place with ID {$id} has been soft-deleted.";
     }
     public function showLastSixRows()
 {
@@ -83,4 +92,16 @@ class placeController extends Controller
 
     return view('blog', ['result' => $result]);
 }
+public function trashed(){
+    $places= Place::onlyTrashed()->get();
+  return view('placestrashed',compact('places'));
+  }
+  public function restore(string $id):RedirectResponse{
+      Place::where('id',$id)->restore();
+      return redirect('places');
+  }
+  public function forcedelete(string $id):RedirectResponse{
+      Place::where('id',$id)->forceDelete();
+      return redirect('places');
+  }
 }

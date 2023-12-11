@@ -5,6 +5,8 @@ use App\Http\Controllers\Examplecontroller;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PlaceController;
+use App\Http\Controllers\placeController as ControllersPlaceController;
+
 enum Section:string{
     case phone='phone';
     case computer='computer';
@@ -133,3 +135,8 @@ Route::get('newblog',[PlaceController::class,'index']);
 Route::get('addexplore',[PlaceController::class,'create']);
 Route::post('addnew',[PlaceController::class,'store'])->name('addnew');
 Route::get('showplaces',[PlaceController::class,'showLastSixRows']);
+Route::get('places',[PlaceController::class,'index']);
+Route::get('deleteplace/{id}',[PlaceController::class,'destroy']);
+Route::get('placestrashed',[PlaceController::class,'trashed']);
+Route::get('restoreplace/{id}',[PlaceController::class,'restore']);
+Route::get('deleteplace/{id}',[PlaceController::class,'forcedelete']);
