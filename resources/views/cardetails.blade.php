@@ -21,6 +21,7 @@
         <div>car title:{{ $car->title }}</div>
         <div>car price :{{ $car->price }}</div>
         <div>car description :{{ $car->description }}</div>
+        <div>car description :{{ $car->category->categoryName }}</div>
         <div>is published ?@if($car->published) yes✅ @else no❎ @endif</div>
     </div>
 </form>

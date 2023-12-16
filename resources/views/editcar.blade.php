@@ -43,6 +43,16 @@
 
 
   </div>
+  <div class="form-group">
+    <label for="category_id">Select Category:</label>
+    <select name="category_id" id="category_id">
+        <option value="">Select category</option>
+        @foreach ($category as $item)
+            <option value="{{ $item->id }}" {{ old('category_id', $car->category_id) == $item->id ? 'selected' : '' }}>{{ $item->categoryName }}</option>
+        @endforeach
+    </select>
+</div>
+
     <button type="submit" class="btn btn-default">update</button>
   </form>
 </div>

@@ -2,13 +2,14 @@
 namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Http\RedirectResponse;
-use App\Models\Car;  
 use App\Traits\Common;        
+use App\Models\Car;  
+use App\Models\Category;  
 
 class CarController extends Controller
 {
     use common;
-    private $columns=['title','price','description','published','image'];
+    private $columns=['title','price','description','published','image','category_id'];
     /**
      * Display a listing of the resource.
      */
@@ -24,7 +25,8 @@ class CarController extends Controller
      */
     public function create()
     {
-        return view('addCard');
+        $category=Category::select('id','categoryName')->get();
+        return view('addCard',compact('category'));
     }
 
     /**
@@ -52,6 +54,7 @@ class CarController extends Controller
             'title' => 'required|string',
             'description' => 'string',
             'price'=>"numeric",
+          
             // 'image' => 'required|mimes:png,jpg,jpeg|max:2048',
             
         ],$message);
@@ -59,6 +62,7 @@ class CarController extends Controller
         $fileName=$this->uploadFile($request->image,'assets/images');
         $data['published'] = isset($request['published']);
         $data['image']=$fileName;
+        $data['category_id'] = $request->input('category_id');
         Car::create($data);        
    
 return "done";
@@ -83,8 +87,9 @@ return "done";
      */
     public function edit(string $id)
     {
+        $category=Category::select('id','categoryName')->get();
         $car=Car::findOrFail($id);
-       return view("editcar",compact('car'));
+       return view("editcar",compact('car','category'));
     }
 
     /**
@@ -111,7 +116,8 @@ return "done";
             $fileName = $this->uploadFile($request->file('image'), 'assets/images');
             $data['image'] = $fileName;
         }
-    
+        $data['published'] = isset($request['published']);
+        $data['category_id'] = $request->input('category_id');
         Car::where('id', $id)->update($data);
     
         return "Data updated";

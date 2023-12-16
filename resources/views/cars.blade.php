@@ -31,7 +31,8 @@
         
         <td>{{$car['title']}}</td>
         <td>{{$car->price}}</td>
-        <td>{{$car->description}}</td>
+        <td>{{$car->description}}<span>{{$car->price}}</span></td>
+        <td>yyyyyyyyyy<span>{{$car->price}}</span>yyyyyyyy</td>
        
         <td> @if($car->published)  yes✅ @else  no ❎ @endif  </td>
           <td><a href="editcar/{{$car->id}}">Edit</a></td>
