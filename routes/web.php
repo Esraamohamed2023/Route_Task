@@ -6,6 +6,8 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\placeController as ControllersPlaceController;
+use Illuminate\Support\Facades\Auth;
+
 
 enum Section:string{
     case phone='phone';
@@ -140,3 +142,6 @@ Route::get('deleteplace/{id}',[PlaceController::class,'destroy']);
 Route::get('placestrashed',[PlaceController::class,'trashed']);
 Route::get('restoreplace/{id}',[PlaceController::class,'restore']);
 Route::get('deleteplace/{id}',[PlaceController::class,'forcedelete']);
+Auth::routes(['verify'=>true]);
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
