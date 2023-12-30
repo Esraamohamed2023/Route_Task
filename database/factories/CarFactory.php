@@ -25,7 +25,7 @@ class CarFactory extends Factory
              'price'=>fake()->randomDigit(),
             'image'=>fake()->imageUrl(800,600),
             'category_id'=>fake()->numberBetween($min=1 , $max=2),
-            'user_id'=>fake()->numberBetween($min=1 , $max=2),
+            // 'user_id'=>fake()->numberBetween($min=1 , $max=2),
 
            
         ];

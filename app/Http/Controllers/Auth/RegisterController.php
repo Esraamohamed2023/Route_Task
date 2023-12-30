@@ -55,6 +55,7 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'password' => ['required', 'string', 'confirmed'],
         ]);
     }
 
@@ -70,11 +71,12 @@ class RegisterController extends Controller
     $user = User::create([
         'name' => $data['name'],
         'email' => $data['email'],
+        'mobile' => $data['mobile'],
         'password' => Hash::make($data['password']),
     ]);
-
+  
     // Send the welcome email
-    Mail::to($user->email)->send(new WelcomeEmail());
+    Mail::to($user->email)->send(new WelcomeEmail( $user));
 
     return $user;
 }}

@@ -8,52 +8,49 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Mail\Mailables\Address;
+use Illuminate\Http\Request;
 
-class WelcomeEmail extends Mailable
+
+
+class ContactMail extends Mailable
 {
     use Queueable, SerializesModels;
-
+public  $data;
     /**
      * Create a new message instance.
      */
-    public $user;
-    public function __construct($user)
+    public function __construct($data)
     {
-        $this->user = $user;
+        $this->data = $data;
     }
-
-    /**
-     * Build the message.
-     *
-     * @return $this
-     */
-    public function build()
-    {
-        
-        return $this->view('emails.welcome')->subject('Welcome to YourApp');
-    }
-
     /**
      * Get the message envelope.
-     *
-     * @return Envelope
      */
+    
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Welcome Email',
+            from: new Address('esraa@example.com', 'esraa'),
+            subject: 'Laravel Ten Test Mail',
         );
     }
 
     /**
      * Get the message content definition.
-     *
-     * @return Content
      */
     public function content(): Content
     {
         return new Content(
-            view: 'emails.welcome', // Correct view file name
+
+            markdown: 'contactmail',
+
+            with:[
+
+                'data' => $this->data
+
+            ]
+
         );
     }
 

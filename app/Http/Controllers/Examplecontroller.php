@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Traits\Common;
+use App\Mail\ContactMail;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Route;
 class Examplecontroller extends Controller
 {
     use common;
@@ -43,4 +46,32 @@ class Examplecontroller extends Controller
     public function landing(){
        return  view('landing');
     }
+    public function mysession(){
+     session()->put('test', 'First Laravel session');
+     session()->forget('test');
+     $value=session('test');
+     
+        return  view('session',compact('value'));
+        // return redirect()->route('home');
+
+
+
+
+
+
+     }
+     public function contact(){
+        return  view('contact');
+     }
+     public function recivecontact( Request $Request){
+        $content=[
+            'name'=>$Request->firstname,
+            'country'=>$Request->country,
+        ];
+        Mail::to('laravelia@test.com')->send(
+            new ContactMail($Request)
+        );
+    
+        return view('contactmail');
+     }
 }

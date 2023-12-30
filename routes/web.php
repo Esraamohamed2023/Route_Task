@@ -7,6 +7,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\PlaceController;
 use App\Http\Controllers\placeController as ControllersPlaceController;
 use Illuminate\Support\Facades\Auth;
+use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 
 
 enum Section:string{
@@ -79,6 +80,8 @@ Route::post('receive',function(){
 
 
 
+
+Route::get('mysession',[Examplecontroller::class,'mysession']);
 Route::get('showupload',[Examplecontroller::class,'showupload']);
 Route::post('upload',[Examplecontroller::class,'upload'])->name('upload');
 Route::get('addcar','Examplecontroller@test1');
@@ -91,8 +94,8 @@ Route::get('sections/{section}',function(Section $section){
     return $section->value;
 });
 /* end Training route */
-Route::get('carshow',[CarController::class,'index']);
-Route::get('addcar',[CarController::class,'create']);
+Route::get('carshow',[CarController::class,'index'])->middleware('verified');
+// Route::get('addcar',[CarController::class,'create']);
 Route::post('storecare',[CarController::class,'store'])->name('addcar');
 Route::get('editcar/{id}',[CarController::class,'edit']);
 Route::put('update/{id}',[CarController::class,'update'])->name("update");
@@ -145,3 +148,17 @@ Route::get('deleteplace/{id}',[PlaceController::class,'forcedelete']);
 Auth::routes(['verify'=>true]);
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::group(
+
+    [
+    
+        'prefix' => LaravelLocalization::setLocale(),
+    
+        'middleware' => [ 'localeSessionRedirect', 'localizationRedirect', 'localeViewPath' ]
+    
+    ], function(){ 
+        Route::get('contact',[Examplecontroller::class,'contact']);
+        Route::get('recivecontact',[Examplecontroller::class,'recivecontact'])->name('recived_contact');
+        Route::get('addcar',[CarController::class,'create']);
+    
+    });
