@@ -16,13 +16,13 @@ use Illuminate\Http\Request;
 class ContactMail extends Mailable
 {
     use Queueable, SerializesModels;
-public  $data;
+public   array $data;
     /**
      * Create a new message instance.
      */
-    public function __construct($data)
+    public function __construct($content)
     {
-        $this->data = $data;
+        $this->data = $content;
     }
     /**
      * Get the message envelope.
@@ -31,8 +31,8 @@ public  $data;
     public function envelope(): Envelope
     {
         return new Envelope(
-            from: new Address('esraa@example.com', 'esraa'),
-            subject: 'Laravel Ten Test Mail',
+            from: new Address('esraa@gmail.com', $this->data['fname']),
+            subject:$this->data['subject'],
         );
     }
 
